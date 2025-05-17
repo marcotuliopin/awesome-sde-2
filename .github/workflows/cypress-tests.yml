@@ -35,7 +35,8 @@ jobs:
           if-no-files-found: error
           path: build
 
-  cypress-run:
+  tests:
+    name: "Run Cypress tests on ${{ matrix.os}}"
     needs: install
     runs-on: ${{ matrix.os }}
     strategy:
