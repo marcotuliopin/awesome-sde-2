@@ -1,45 +1,13 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
+import { useTheme } from "./contexts/ThemeContext";
 import { Header } from "@layouts/Header";
-
 
 function App() {
     const { theme } = useTheme();
-    const [count, setCount] = useState(0);
 
     return (
-        <ThemeProvider>
+        <div className={`${theme === "dark" ? "dark" : ""} transition-colors duration-500 dark:bg-gray-900 bg-gray-100 min-h-screen`}>
             <Header />
-            <div className={`${theme === "dark" ? "dark" : ""}`}>
-                <a href="https://vite.dev" target="_blank">
-                    <img
-                        src={viteLogo}
-                        className="text-green-400"
-                        alt="Vite logo"
-                    />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div>
-                <button
-                    className="text-green-400"
-                    onClick={() => setCount((count) => count + 1)}
-                >
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
-        </ThemeProvider>
+        </div>
     );
 }
 
