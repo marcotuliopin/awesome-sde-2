@@ -1,25 +1,22 @@
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import type { JSX } from "react";
+import { CiUser } from "react-icons/ci";
 
 export const Header = (): JSX.Element => {
     return (
-        <header className="flex items-center justify-between p-4 bg-gray-800 text-white">
-            <div className="text-lg font-bold">My App</div>
-            <nav>
-                <ul className="flex space-x-4">
+        <header className="flex items-center justify-between p-4 pr-6 md:pr-12 bg-gradient-to-r dark:from-gray-900 dark:to-gray-800 from-gray-100 to-gray-200 text-white shadow-lg transition-colors duration-500">
+            <div className="text-lg font-bold tracking-wide dark:text-white text-black">
+                Store It
+            </div>
+            <nav className="flex items-center">
+                <ul className="flex items-center space-x-4">
                     <li>
-                        <a href="#home" className="hover:text-gray-400">
-                            Home
-                        </a>
+                        <button className="h-full w-8 align-middle justify-center">
+                            <CiUser className="h-full w-full hover:scale-110 transition-all duration-200 hover:cursor-pointer dark:text-gray-100 text-gray-800" />
+                        </button>
                     </li>
                     <li>
-                        <a href="#about" className="hover:text-gray-400">
-                            About
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#contact" className="hover:text-gray-400">
-                            Contact
-                        </a>
+                        <ThemeToggle />
                     </li>
                 </ul>
             </nav>
