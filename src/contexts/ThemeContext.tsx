@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
-type Theme = "light" | "dark";
+export type Theme = "light" | "dark";
 type ThemeContextType = {
     theme: Theme;
     toggleTheme: () => void;
