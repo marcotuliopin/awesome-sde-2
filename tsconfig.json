@@ -5,7 +5,7 @@
             "@/*": ["./src/*"],
             "@contexts/*": ["./src/contexts/*"],
             "@components/*": ["./src/components/*"],
-            "@layouts/*": ["./src/components/layout/*"],
+            "@routes/*": ["./src/routes/*"],
             "@assets/*": ["./src/assets/*"]
         }
     },
