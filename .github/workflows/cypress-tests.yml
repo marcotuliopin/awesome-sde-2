@@ -33,7 +33,7 @@ jobs:
         with:
           name: build
           if-no-files-found: error
-          path: build
+          path: dist
 
   tests:
     name: "Run Cypress tests on ${{ matrix.os}}"
