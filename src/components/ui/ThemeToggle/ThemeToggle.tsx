@@ -1,4 +1,4 @@
-import { useTheme } from "@/contexts/ThemeContext";
+import { useTheme } from "@contexts/ThemeContext";
 import type { JSX } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 
@@ -12,16 +12,19 @@ export const ThemeToggle = (): JSX.Element => {
                        transition-all duration-300 ease-in-out shadow-md"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            data-testid="theme-toggle-button"
         >
             {theme === "dark" ? (
                 <FaSun
                     size={16}
                     className="transition-transform duration-300 ease-in-out"
+                    data-testid="sun-icon"
                 />
             ) : (
                 <FaMoon
                     size={16}
                     className="transition-transform duration-300 ease-in-out"
+                    data-testid="moon-icon"
                 />
             )}
         </button>
