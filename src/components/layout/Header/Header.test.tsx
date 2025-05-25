@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { Header } from "./Header";
 import "@testing-library/jest-dom";
+import { PROJECT_NAME } from "@/utils/constants";
 
 // Mock ThemeToggle component
 jest.mock("@/components/ui/ThemeToggle", () => ({
@@ -10,7 +11,7 @@ jest.mock("@/components/ui/ThemeToggle", () => ({
 describe("<Header />", () => {
     it("renders the header with the correct title", () => {
         render(<Header />);
-        expect(screen.getByText("Store It")).toBeInTheDocument();
+        expect(screen.getByText(PROJECT_NAME)).toBeInTheDocument();
     });
 
     it("renders the user icon button", () => {
