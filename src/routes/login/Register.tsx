@@ -1,32 +1,30 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-export const Login = () => {
+export const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:3001/auth/login', {
+            const response = await axios.post('http://localhost:3001/auth/register', {
                 username,
                 password
             });
 
-            console.log('Tokens:', response.data);
-            localStorage.setItem('accessToken', response.data.accessToken);
-            localStorage.setItem('refreshToken', response.data.refreshToken);
+            alert('User registered successfully!');
         } catch (err) {
-            console.error('Login failed:', err);
+            console.error('Registration failed:', err);
+            alert('Registration failed.');
         }
     };
-    
 
     return (
         <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
+            <h1>Register</h1>
+            <form onSubmit={handleRegister}>
                 <label htmlFor="username">Username:</label>
                 <input
                     type="text"
@@ -43,7 +41,7 @@ export const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <br />
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
         </div>
     );
