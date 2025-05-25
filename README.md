@@ -1,6 +1,6 @@
 # TP 1 Software Engineering II
 
-The project is accessible via url https://awesome-sde-2-glti-ajdevk5uw-marcotuliopins-projects.vercel.app/
+The project is accessible via url https://awesome-sde-2-glti.vercel.app/
 
 ## React + TypeScript + Vite
 

@@ -1,6 +1,6 @@
 import { render, fireEvent } from "@testing-library/react";
 import { ThemeToggle } from "./ThemeToggle";
-import { ThemeContext } from "@contexts/ThemeContext";
+import { ThemeContext, type Theme } from "@contexts/ThemeContext";
 
 jest.mock("react-icons/fa", () => ({
     FaMoon: (props: any) => <svg data-testid="moon" {...props} />,
@@ -9,7 +9,7 @@ jest.mock("react-icons/fa", () => ({
 
 const toggleThemeMock = jest.fn();
 
-const renderWithTheme = (theme: "light" | "dark") => {
+const renderWithTheme = (theme: Theme) => {
     return render(
         <ThemeContext.Provider
             value={{ theme: theme, toggleTheme: toggleThemeMock }}
