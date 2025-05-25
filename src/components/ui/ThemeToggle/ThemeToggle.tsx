@@ -1,4 +1,4 @@
-import { useTheme } from "@contexts/ThemeContext";
+import { useTheme } from "@/contexts/theme.context";
 import type { JSX } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 

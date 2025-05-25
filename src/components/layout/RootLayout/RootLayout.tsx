@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "@components/layout/Header";
-import { useTheme } from "@contexts/ThemeContext";
+import { useTheme } from "@/contexts/theme.context";
 
 export const RootLayout = () => {
     const { theme } = useTheme();

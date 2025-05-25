@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { RootLayout } from "./RootLayout";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useTheme } from "@/contexts/theme.context";
 
 jest.mock("@components/layout/Header", () => ({
     Header: () => <header data-testid="header" />,
@@ -11,7 +11,7 @@ jest.mock("react-router-dom", () => ({
     Outlet: () => <div data-testid="outlet" />,
 }));
 
-jest.mock("@contexts/ThemeContext", () => ({
+jest.mock("@contexts/themte.context", () => ({
     useTheme: jest.fn(),
 }));
 
