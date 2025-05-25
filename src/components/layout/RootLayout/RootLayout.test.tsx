@@ -11,7 +11,7 @@ jest.mock("react-router-dom", () => ({
     Outlet: () => <div data-testid="outlet" />,
 }));
 
-jest.mock("@contexts/themte.context", () => ({
+jest.mock("@contexts/theme.context", () => ({
     useTheme: jest.fn(),
 }));
 
