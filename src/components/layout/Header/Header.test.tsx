@@ -8,6 +8,23 @@ jest.mock("@/components/ui/ThemeToggle", () => ({
     ThemeToggle: () => <div data-testid="theme-toggle" />,
 }));
 
+jest.mock("react-router-dom", () => ({
+    useNavigate: jest.fn(),
+    Link: ({
+        children,
+        to,
+        className,
+    }: {
+        children: React.ReactNode;
+        to: string;
+        className?: string;
+    }) => (
+        <a href={to} className={className}>
+            {children}
+        </a>
+    ),
+}));
+
 describe("<Header />", () => {
     it("renders the header with the correct title", () => {
         render(<Header />);
