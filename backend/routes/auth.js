@@ -11,7 +11,7 @@ const REFRESH_SECRET = 'your_refresh_secret';
 
 const getUsers = () => JSON.parse(fs.readFileSync(usersPath));
 
-const authenticateToken = require('../middleware/auth');
+const authenticateToken = require('../src/middlewares/auth');
 
 // Registro
 router.post('/register', (req, res) => {

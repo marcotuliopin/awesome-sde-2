@@ -1,13 +1,23 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const authRoutes = require('./routes/auth');
-const cors = require('cors');
+require('dotenv').config();
 
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+const app = require('./config/express');
 
-app.use('/auth', authRoutes);
+// Optional: Uncomment to sync the database (only in dev, and be careful with force:true)
+/*
+(async () => {
+    const database = require('./database/index.js');
+    const Product = require('./src/domains/Product/models/Product');
+    await Product.sync({ force: true }); // WARNING: This drops and recreates the table
+})();
+*/
 
-const PORT = 3001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Simple test route
+app.get('/', (req, res) => {
+    res.send('Hello world!');
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`API listening on port ${PORT}`);
+});

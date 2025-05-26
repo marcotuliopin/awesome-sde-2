@@ -4,9 +4,7 @@ const httpsStatusCodes = require("../../../utils/constants/httpStatusCodes");
 
 Router.post("/", async (req, res, next) => {
   try {
-    console.log(req.body);
     const product = await ProductService.create(req.body);
-    console.log("p: ", product);
     res.status(httpsStatusCodes.ACCEPTED).send(product);
   } catch (error) {
     next(error);
