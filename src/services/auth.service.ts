@@ -1,11 +1,17 @@
 // TODO: Use environment variables for API URL
 const API_URL = "http://localhost:3000"; 
 
-export const login = async (email, password) => {
-  const response = await fetch(`${API_URL}/auth/login`, {
+export const login = async (email: string, password: string): Promise<{ token: string }> => {
+  const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
-  return await response.json();
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Erro ao fazer login");
+  }
+
+  return await res.json();
 };

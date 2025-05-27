@@ -19,21 +19,6 @@ export const registerUser = async (user: User): Promise<User> => {
   return await res.json();
 };
 
-export const loginUser = async (email: string, password: string): Promise<{ token: string }> => {
-  const res = await fetch(`${API_URL}/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Erro ao fazer login");
-  }
-
-  return await res.json();
-};
-
 export const getUserByEmail = async (email: string): Promise<User> => {
   const res = await fetch(`${API_URL}/users/email/${encodeURIComponent(email)}`);
   if (!res.ok) throw new Error("Usuário não encontrado");
