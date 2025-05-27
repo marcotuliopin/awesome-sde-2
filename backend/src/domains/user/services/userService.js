@@ -1,34 +1,66 @@
-const User = require('../models/User');
-const NotFoundError = require('../../../../errors/NotFoundError');
-const encryptPassword = require('../../../utils/functions/encryptPassword');
-const { UniqueConstraintError, QueryError } =  require('sequelize');
-const DuplicateError = require('../../../../errors/DuplicateError');
+const fs = require("fs").promises;
+const path = require("path");
+const encryptPassword = require("../../../utils/functions/encryptPassword");
+const NotFoundError = require("../../../../errors/NotFoundError");
+const DuplicateError = require("../../../../errors/DuplicateError");
+const QueryError = require("../../../../errors/QueryError");
+
+const USERS_FILE = path.resolve(__dirname, "../../../../data/users.json");
+
 class UserService {
+  async _readUsers() {
+    try {
+      const data = await fs.readFile(USERS_FILE, "utf-8");
+      return JSON.parse(data);
+    } catch (error) {
+      return [];
+    }
+  }
 
-    async create(body) {
-        body.password =await encryptPassword(body.password);
-        try{
-            await User.create(body);
-        }catch(error){
-            if (error instanceof UniqueConstraintError){
-                throw new DuplicateError('Esse email já está cadastrado no sistema!');
-            }
-            else 
-                throw new QueryError('Os parâmetros não podem ser nulos');
-        }
+  async _writeUsers(users) {
+    await fs.writeFile(USERS_FILE, JSON.stringify(users, null, 2));
+  }
+
+  async create(body) {
+    if (!body || !body.email || !body.password) {
+      throw new QueryError("Email e senha são obrigatórios.");
     }
 
-    async getByEmail(email){
-        const user = await User.findOne({
-            where: {
-                email: email
-            }
-        });
-        if (!user){
-            throw new NotFoundError('Usuário não encontrado');
-        }
-        return user;
+    const email = body.email.toLowerCase().trim();
+    const users = await this._readUsers();
+
+    const exists = users.find((user) => user.email === email);
+    if (exists) {
+      throw new DuplicateError("Esse email já está cadastrado no sistema!");
     }
+
+    const encryptedPassword = await encryptPassword(body.password);
+
+    const newUser = {
+      id: Date.now(), // ou use uuid
+      name: body.name,
+      email,
+      password: encryptedPassword,
+    };
+
+    users.push(newUser);
+    await this._writeUsers(users);
+
+    const { password, ...userWithoutPassword } = newUser;
+    return userWithoutPassword;
+  }
+
+  async getByEmail(email) {
+    const users = await this._readUsers();
+    console.log(users);
+    const user = users.find((u) => u.email === email.toLowerCase().trim());
+
+    if (!user) {
+      throw new NotFoundError("Usuário não encontrado");
+    }
+
+    return user;
+  }
 }
 
-module.exports = new UserService;
+module.exports = new UserService();

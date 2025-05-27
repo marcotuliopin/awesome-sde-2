@@ -24,7 +24,7 @@ Router.put("/:id", async (req, res, next) => {
 
 Router.get("/", async (req, res, next) => {
   try {
-    all_products = await ProductService.getall();
+    all_products = await ProductService.getAll();
     res.status(httpsStatusCodes.ACCEPTED).send(all_products);
   } catch (error) {
     next(error);

@@ -8,7 +8,7 @@ function jwtSign(user, res){
     const userInfo = {
         id: user.id,
         role: user.role,
-        name: user.name
+        email: user.email
     };
     const token = jwt.sign({
         user: userInfo
@@ -50,8 +50,8 @@ const notLoggedIn = (req, res, next) => {
                 process.env.JWT_SECRET,
                 (error) => {
                     if (!(error instanceof jwt.TokenExpiredError)) {
-                        let user = jwt.decode(token);
-                        throw new PermissionError('Você já está logado como: ' + user.user.name);
+                        let data = jwt.decode(token);
+                        throw new PermissionError('Você já está logado como: ' + data.user.email);
                     }
                 },
             );

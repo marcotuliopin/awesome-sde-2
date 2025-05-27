@@ -27,13 +27,4 @@ Router.post("/logout", jwtMiddleware, async (req, res, next) => {
   }
 });
 
-Router.post("/", async (req, res, next) => {
-  try {
-    await UserService.create(req.body);
-    res.status(httpsStatusCodes.ACCEPTED).send("Usuário criado com sucesso");
-  } catch (error) {
-    next(error);
-  }
-});
-
 module.exports = Router;
