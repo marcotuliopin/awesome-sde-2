@@ -1,7 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
 const productService = require("../services/productService");
-const e = require("express");
 
 const PRODUCTS_FILE = path.resolve(__dirname, "../../../../data/products.json");
 
