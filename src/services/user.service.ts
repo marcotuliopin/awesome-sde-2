@@ -1,4 +1,4 @@
-import { User } from "../types/user";
+import type { User } from "../types/user";
 
 
 // TODO: Use environment variables for API URL
