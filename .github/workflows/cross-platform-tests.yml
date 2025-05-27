@@ -35,17 +35,17 @@ jobs:
           if-no-files-found: error
           path: dist
 
-    back-end-tests:
-        runs-on: ubuntu-latest
-        defaults:
-        run:
-            working-directory: backend
-        steps:
-        - uses: actions/checkout@v4
-        - run: npm ci
-        - run: npm test
+  backend-unit-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm test
 
-  front-end-unit-tests:
+  frontend-unit-tests:
     name: Run Unit Tests
     runs-on: ubuntu-latest
     needs: install
