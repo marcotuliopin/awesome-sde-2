@@ -52,7 +52,6 @@ class UserService {
 
   async getByEmail(email) {
     const users = await this._readUsers();
-    console.log(users);
     const user = users.find((u) => u.email === email.toLowerCase().trim());
 
     if (!user) {
