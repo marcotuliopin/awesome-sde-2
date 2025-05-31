@@ -13,10 +13,6 @@ const Protected = () => <div data-testid="protected">Protected Content</div>;
 
 
 describe("AuthWrapper", () => {
-    beforeEach(() => {
-        jest.resetAllMocks();
-    });
-
     it("should render <AuthModal /> when isAuthenticated is false", () => {
         render(
             <AuthWrapper>
