@@ -6,7 +6,7 @@ import { Root } from "@/routes/root/Root";
 import { Login } from "@/routes/login/Login";
 import { Register } from "@/routes/register/Register";
 import "./index.css";
-import { AuthWrapper } from "./components/ui/AuthWrapper";
+import { AuthWrapper } from "./components/layout/AuthWrapper";
 import { ThemeProvider } from "./contexts/theme.context";
 
 const router = createBrowserRouter([
@@ -15,12 +15,14 @@ const router = createBrowserRouter([
         element: <RootLayout />,
         children: [
             {
-                index: true,
-                element: (
-                    <AuthWrapper>
-                        <Root />
-                    </AuthWrapper>
-                ),
+                path: "/",
+                element: <AuthWrapper />,
+                children: [
+                    {
+                        index: true,
+                        element: <Root />,
+                    },
+                ],
             },
             { path: "/login", element: <Login /> },
             { path: "/register", element: <Register /> },
@@ -30,8 +32,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <StrictMode>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
+        <ThemeProvider>
+            <RouterProvider router={router} />
+        </ThemeProvider>
     </StrictMode>
 );

@@ -1,21 +1,20 @@
 import { privateApi, publicApi } from "@/api/axios";
 import type { User } from "@/types/user";
 
-
 export const AuthService = {
-    login: async (
-        email: string,
-        password: string
-    ): Promise<User | null> => {
+    login: async (email: string, password: string): Promise<User> => {
         try {
             const response = await publicApi.post("/user/login", {
                 email,
-                password
+                password,
             }); //Server returns a JWT as an HTTP-only cookie
             return response.data;
-        } catch (error: any) { // TODO: add type for error
-            console.log("Error logging in:", error);
-            return null;
+        } catch (error: any) {
+            // TODO: add type for error
+            if (error.response?.data) {
+                throw new Error(error.response.data.message);
+            }
+            throw new Error("Error connecting to the server");
         }
     },
 
@@ -30,12 +29,16 @@ export const AuthService = {
         }
     },
 
-    register: async (name: string, email: string, password: string): Promise<boolean> => {
+    register: async (
+        name: string,
+        email: string,
+        password: string
+    ): Promise<boolean> => {
         try {
-            const response = await publicApi.post("/user/register", {
+            const response = await publicApi.post("/user/", {
                 name,
                 email,
-                password
+                password,
             });
             return response.status === 202;
         } catch (error: any) {
@@ -53,5 +56,5 @@ export const AuthService = {
         } catch (error) {
             return null;
         }
-    }
+    },
 };
