@@ -84,6 +84,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         } finally {
             setUser(null);
             setIsAuthenticated(false);
+            alert("You have been logged out.");
         }
     };
 
