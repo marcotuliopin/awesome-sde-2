@@ -51,6 +51,6 @@ describe("UserService", () => {
 
   test("deve lançar erro se usuário não for encontrado", async () => {
     await expect(userService.getByEmail("naoexiste@email.com"))
-      .rejects.toThrow("Usuário não encontrado");
+      .rejects.toThrow("User not found.");
   });
 });
