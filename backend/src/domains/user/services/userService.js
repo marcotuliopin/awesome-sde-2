@@ -55,7 +55,7 @@ class UserService {
     const user = users.find((u) => u.email === email.toLowerCase().trim());
 
     if (!user) {
-      throw new NotFoundError("Usuário não encontrado");
+      throw new NotFoundError("User not found.");
     }
 
     return user;

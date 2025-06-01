@@ -1,27 +1,28 @@
-const PermissionError = require('../../errors/PermissionError');
-const bcrypt = require('bcrypt');
-const httpStatusCodes = require('../utils/constants/httpStatusCodes');
-const UserService = require('../domains/user/services/userService');
-const jwt = require('jsonwebtoken');
-const authConfig = require('../../config/auth');
-function jwtSign(user, res){
+const PermissionError = require("../../errors/PermissionError");
+const bcrypt = require("bcrypt");
+const httpStatusCodes = require("../utils/constants/httpStatusCodes");
+const UserService = require("../domains/user/services/userService");
+const jwt = require("jsonwebtoken");
+const authConfig = require("../../config/auth");
+function jwtSign(user, res) {
     const userInfo = {
         id: user.id,
         role: user.role,
-        email: user.email
+        email: user.email,
     };
-    const token = jwt.sign({
-        user: userInfo
-    }, authConfig.JWT_SECRET,
-    {expiresIn: authConfig.JWT_EXPIRATION});
+    const token = jwt.sign(
+        {
+            user: userInfo,
+        },
+        authConfig.JWT_SECRET,
+        { expiresIn: authConfig.JWT_EXPIRATION }
+    );
 
-    res.cookie('jwt', token, {
+    res.cookie("jwt", token, {
         httpOnly: true,
-        secure: false // AQUI TEM QUE SER TRUE QUANDO FOR PRA PRODUÇÃO
+        secure: false, // Should be true in production
     });
 }
-
-
 
 async function jwtMiddleware(req, res, next) {
     try {
@@ -32,7 +33,9 @@ async function jwtMiddleware(req, res, next) {
         }
 
         if (!req.user) {
-            throw new PermissionError('Você deve fazer o login primeiro');
+            throw new PermissionError(
+                "You must be logged in to access this resource."
+            );
         }
         next();
     } catch (error) {
@@ -40,21 +43,18 @@ async function jwtMiddleware(req, res, next) {
     }
 }
 
-
 const notLoggedIn = (req, res, next) => {
     try {
         const token = cookieExtractor(req);
         if (token) {
-            jwt.verify(
-                token,
-                process.env.JWT_SECRET,
-                (error) => {
-                    if (!(error instanceof jwt.TokenExpiredError)) {
-                        let data = jwt.decode(token);
-                        throw new PermissionError('Você já está logado como: ' + data.user.email);
-                    }
-                },
-            );
+            jwt.verify(token, process.env.JWT_SECRET, (error) => {
+                if (!(error instanceof jwt.TokenExpiredError)) {
+                    let data = jwt.decode(token);
+                    throw new PermissionError(
+                        "You are already logged in as: " + data.user.email
+                    );
+                }
+            });
         }
         next();
     } catch (error) {
@@ -62,16 +62,15 @@ const notLoggedIn = (req, res, next) => {
     }
 };
 
-function cookieExtractor(req){
+function cookieExtractor(req) {
     let token = null;
 
-    if (req && req.cookies){
-        token = req.cookies['jwt'];
+    if (req && req.cookies) {
+        token = req.cookies["jwt"];
     }
 
     return token;
 }
-
 
 async function loginMiddleware(req, res, next) {
     try {
@@ -79,14 +78,17 @@ async function loginMiddleware(req, res, next) {
         const password = req.body.password;
         const user = await UserService.getByEmail(email);
         if (!user) {
-            throw new PermissionError('Email ou senha inválido');
+            throw new PermissionError("Invalid email or password");
         } else {
-            const matchingPassword = await bcrypt.compare(password, user.password);
+            const matchingPassword = await bcrypt.compare(
+                password,
+                user.password
+            );
             if (!matchingPassword) {
-                throw new PermissionError('Email ou senha inválido');
+                throw new PermissionError("Invalid email or password");
             }
         }
-        
+
         jwtSign(user, res);
 
         const userInfo = {
@@ -94,7 +96,6 @@ async function loginMiddleware(req, res, next) {
             role: user.role,
         };
         res.status(httpStatusCodes.ACCEPTED).send(userInfo);
-
     } catch (error) {
         next(error);
     }
@@ -103,5 +104,5 @@ async function loginMiddleware(req, res, next) {
 module.exports = {
     notLoggedIn,
     loginMiddleware,
-    jwtMiddleware
+    jwtMiddleware,
 };

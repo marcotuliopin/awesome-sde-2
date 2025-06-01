@@ -1,35 +1,57 @@
-// TODO: Use environment variables for API URL
-const API_URL = "http://localhost:3000";
+import { privateApi, publicApi } from "@/api/axios";
+import type { User } from "@/types/user";
 
 
-export const login = async (
-    email: string,
-    password: string
-): Promise<{ token: string }> => {
-    const res = await fetch(`${API_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-    });
+export const AuthService = {
+    login: async (
+        email: string,
+        password: string
+    ): Promise<User | null> => {
+        try {
+            const response = await publicApi.post("/user/login", {
+                email,
+                password
+            }); //Server returns a JWT as an HTTP-only cookie
+            return response.data;
+        } catch (error: any) { // TODO: add type for error
+            console.log("Error logging in:", error);
+            return null;
+        }
+    },
 
-    if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Erro ao fazer login");
+    logout: async (): Promise<void> => {
+        try {
+            await privateApi.post("/user/logout");
+        } catch (error: any) {
+            if (error.response?.data) {
+                throw new Error(error.response.data.message);
+            }
+            throw new Error("Error connecting to the server");
+        }
+    },
+
+    register: async (name: string, email: string, password: string): Promise<boolean> => {
+        try {
+            const response = await publicApi.post("/user/register", {
+                name,
+                email,
+                password
+            });
+            return response.status === 202;
+        } catch (error: any) {
+            if (error.response?.data) {
+                throw new Error(error.response.data.message);
+            }
+            throw new Error("Error connecting to the server");
+        }
+    },
+
+    checkAuth: async (): Promise<User | null> => {
+        try {
+            const response = await privateApi.get("/user/me");
+            return response.data as User;
+        } catch (error) {
+            return null;
+        }
     }
-
-    return await res.json();
-};
-
-
-export const logout = async (): Promise<void> => {
-    const res = await fetch(`${API_URL}/auth/logout`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-    });
-
-    if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Erro ao fazer logout");
-    }
-    return await res.json();
 };
