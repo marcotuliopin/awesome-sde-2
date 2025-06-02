@@ -1,23 +1,47 @@
-import { useState, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { useAuth } from "@/contexts/auth.context";
 import { Link } from "react-router-dom";
 
 export const Register = (): JSX.Element => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [formName, setFormName] = useState("");
+    const [formEmail, setFormEmail] = useState("");
+    const [formPassword, setFormPassword] = useState("");
+    const [formConfirmPassword, setFormConfirmPassword] = useState("");
     const [error, setError] = useState("");
 
-    const { register } = useAuth();
+    const { isAuthenticated, register, logout } = useAuth();
+
+    useEffect(() => {
+        if (isAuthenticated) logout();
+    }, [isAuthenticated, logout]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
 
-        // Validações básicas
-        if (!name || !email || !password) {
+        let name = formName.trim();
+        let email = formEmail.trim();
+        let password = formPassword.trim();
+        let confirmPassword = formConfirmPassword.trim();
+
+        if (!name || !email || !password || !confirmPassword) {
             setError("All fields are required");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isEmailValid = emailRegex.test(email);
+        if (!isEmailValid) {
+            setError("Please enter a valid email address");
+            return;
+        }
+
+        const hasMinLength = password.length >= 6;
+        const hasNumber = /\d/.test(password);
+        const hasLetter = /[a-zA-Z]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+        if (!hasMinLength || !hasNumber || !hasLetter || !hasSpecialChar) {
+            setError("Password must contain at least 6 characters, one number, one letter, and one special character");
             return;
         }
 
@@ -40,38 +64,35 @@ export const Register = (): JSX.Element => {
 
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="name">Full Name:</label>
+                    <label data-testid="name-label" htmlFor="name">Full Name:</label>
                     <input
                         type="text"
                         id="name"
                         data-testid="name-input"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
+                        value={formName}
+                        onChange={(e) => setFormName(e.target.value)}
                     />
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="email">Email:</label>
+                    <label data-testid="email-label" htmlFor="email">Email:</label>
                     <input
-                        type="email"
+                        type="text"
                         id="email"
                         data-testid="email-input"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
+                        value={formEmail}
+                        onChange={(e) => setFormEmail(e.target.value)}
                     />
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="password">Password:</label>
+                    <label data-testid="password-label" htmlFor="password">Password:</label>
                     <input
                         type="password"
                         id="password"
                         data-testid="password-input"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
+                        value={formPassword}
+                        onChange={(e) => setFormPassword(e.target.value)}
                         minLength={6}
                     />
                 </div>
@@ -82,20 +103,26 @@ export const Register = (): JSX.Element => {
                         type="password"
                         id="confirmPassword"
                         data-testid="confirm-password-input"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
+                        value={formConfirmPassword}
+                        onChange={(e) => setFormConfirmPassword(e.target.value)}
                     />
                 </div>
 
                 <div className="form-actions">
-                    <button type="submit" className="register-button">
+                    <button
+                        data-testid="register-button"
+                        type="submit"
+                        className="register-button"
+                    >
                         Register
                     </button>
                 </div>
 
                 <p className="login-link">
-                    Already have an account? <Link to="/login">Log in</Link>
+                    Already have an account?{" "}
+                    <Link data-testid="go-to-login" to="/login">
+                        Log in
+                    </Link>
                 </p>
             </form>
         </div>

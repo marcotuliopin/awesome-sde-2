@@ -19,7 +19,7 @@ export const Login = (): JSX.Element => {
 
     return (
         <div>
-            <h1>Login</h1>
+            <h1 data-testid="login-header">Login</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="email">Email:</label>
                 <input
@@ -32,14 +32,14 @@ export const Login = (): JSX.Element => {
                 <label htmlFor="password">Password:</label>
                 <input
                     type="password"
-                    data-testid="password"
+                    data-testid="password-input"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <br />
-                <button type="submit">Login</button>
+                <button data-testid="login-button" type="submit">Login</button>
             </form>
-            <Link to="/register">Don't have an account? Register here</Link>
+            <Link data-testid="go-to-register" to="/register">Don't have an account? Register here</Link>
         </div>
     );
 };
