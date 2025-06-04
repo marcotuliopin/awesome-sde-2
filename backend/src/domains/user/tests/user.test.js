@@ -48,6 +48,7 @@ describe("UserService", () => {
     const found = await userService.getByEmail("carlos@example.com");
 
     expect(found.email).toBe("carlos@example.com");
+    expect(found.name).toBe("Carlos");
   });
 
   test("deve lançar erro se usuário não for encontrado", async () => {
