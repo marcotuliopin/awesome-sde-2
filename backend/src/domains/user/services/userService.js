@@ -5,7 +5,7 @@ const NotFoundError = require("../../../../errors/NotFoundError");
 const DuplicateError = require("../../../../errors/DuplicateError");
 const QueryError = require("../../../../errors/QueryError");
 
-const USERS_FILE = path.resolve(__dirname, "../../../../data/users.json");
+const USERS_FILE = process.env.USERS_FILE || path.resolve(__dirname, "../../../../data/users.json");
 
 class UserService {
   async _readUsers() {

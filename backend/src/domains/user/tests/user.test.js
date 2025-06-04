@@ -1,12 +1,13 @@
+process.env.USERS_FILE = require("path").resolve(__dirname, "../../../../data/users.test.json");
+
 const fs = require("fs").promises;
 const path = require("path");
 const userService = require("../services/userService");
 
-const USERS_FILE = path.resolve(__dirname, "../../../../data/users.json");
 
 describe("UserService", () => {
   beforeEach(async () => {
-    await fs.writeFile(USERS_FILE, "[]");
+    await fs.writeFile(process.env.USERS_FILE , "[]");
   });
 
   test("deve criar um novo usuário", async () => {

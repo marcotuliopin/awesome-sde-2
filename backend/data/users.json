@@ -4,5 +4,10 @@
     "name": "Zangado",
     "email": "zangado@gmail.com",
     "password": "$2b$10$SZmAm0gjiphydHfh8JMuZugCdIS.sQkNacUlt76CpAGv0PKmga27m"
+  },
+  {
+    "id": 1749048662031,
+    "email": "gabriel@adsa.com.br",
+    "password": "$2b$10$S2x9k7OUCN40WJf.N4JWVepT5dbAMuqGT6jnaJCu12vozlVfSywTa"
   }
 ]

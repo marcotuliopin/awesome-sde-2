@@ -2,7 +2,7 @@ const fs = require("fs").promises;
 const path = require("path");
 const QueryError = require("../../../../errors/QueryError");
 
-const PRODUCTS_FILE = path.resolve(__dirname, "../../../../data/products.json");
+const PRODUCTS_FILE = process.env.PRODUCTS_FILE || path.resolve(__dirname, "../../../../data/products.json");
 
 class ProductService {
   async _readProducts() {

@@ -1,12 +1,12 @@
+process.env.PRODUCTS_FILE = require("path").resolve(__dirname, "../../../../data/products.test.json");
+
 const fs = require("fs").promises;
 const path = require("path");
 const productService = require("../services/productService");
 
-const PRODUCTS_FILE = path.resolve(__dirname, "../../../../data/products.json");
-
 describe("ProductService", () => {
   beforeEach(async () => {
-    await fs.writeFile(PRODUCTS_FILE, "[]");
+    await fs.writeFile(process.env.PRODUCTS_FILE , "[]");
   });
 
   test("deve criar um produto", async () => {
