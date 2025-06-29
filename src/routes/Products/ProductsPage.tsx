@@ -42,7 +42,6 @@ class Products extends React.Component<object, ProductsState> {
     getAllProducts()
       .then((data: Product[]) => {
         // Update state with products data
-        console.log(data);
         this.setState({ products: data });
       })
       .catch((error) => {
@@ -85,7 +84,6 @@ class Products extends React.Component<object, ProductsState> {
     })
       .then((data: Product) => {
         // Update state with new product data
-        console.log("passou aqui: ", data);
         this.setState((prevState) => ({
           products: [...prevState.products, data],
           productName: "",

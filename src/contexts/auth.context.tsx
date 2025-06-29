@@ -96,7 +96,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     ): Promise<boolean> => {
         try {
             const success = await AuthService.register(name, email, password);
-            console.log("Registration success:", success);
             if (success) return await login(email, password, from);
             return false;
         } catch (error) {

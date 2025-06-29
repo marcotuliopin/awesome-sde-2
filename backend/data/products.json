@@ -10,7 +10,21 @@
     "id": 1751208311185,
     "name": "oto cara",
     "brand": "as",
-    "quantity": 13,
+    "quantity": 166,
     "expirationDate": "2025-06-16"
+  },
+  {
+    "id": 1751214206539,
+    "name": "oto cara",
+    "brand": "as",
+    "quantity": 12,
+    "expirationDate": "2025-06-16"
+  },
+  {
+    "id": 1751214545373,
+    "name": "asd",
+    "brand": "asd",
+    "quantity": 12,
+    "expirationDate": "2025-06-27"
   }
 ]

@@ -12,14 +12,14 @@ Router.post("/", async (req, res, next) => {
 });
 
 Router.put("/:id", async (req, res, next) => {
-  try {
+    try {
     await ProductService.update(req.params.id, req.body);
-    res
-      .status(httpsStatusCodes.ACCEPTED)
-      .send("Produto atualizado com sucesso");
-  } catch (error) {
+    res.status(httpsStatusCodes.ACCEPTED).json({
+        message: "Produto atualizado com sucesso",
+    });
+    } catch (error) {
     next(error);
-  }
+    }
 });
 
 Router.get("/", async (req, res, next) => {

@@ -22,5 +22,17 @@
     "name": "sadsda",
     "email": "rakasd21@ufmg.br",
     "password": "$2b$10$XPeO.UF49A/VuoRA4P.FteRFdd1IfY7cajvGJJT.ov.5prnMfyFOC"
+  },
+  {
+    "id": 1751213825496,
+    "name": "funfa",
+    "email": "novoemail123@gmail.com",
+    "password": "$2b$10$QehulkvALPZyEl.iH33ARe.NylzsSPfFgVOH00jZhDBZ2VFMow06q"
+  },
+  {
+    "id": 1751213871399,
+    "name": "funfa",
+    "email": "novoemail1234@gmail.com",
+    "password": "$2b$10$5ZGBcpmYzAttag4CfvelduSbLeiA4VNg5OhKJ/M3wjtSuYXgb8zTq"
   }
 ]

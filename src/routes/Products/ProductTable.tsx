@@ -30,7 +30,7 @@ const ProductTable: FC<ProductTableProps> = ({ products, onQuantityUpdate }) => 
       await updateQuantityProduct(productId, quantity);
       alert("Produto atualizado");
     } catch (error) {
-      console.log("Erro:", error);
+        alert("Erro ao atualizar produto: " + (error instanceof Error ? error.message : "Erro desconhecido"));
     } finally {
       setIsLoading(false);
     }
