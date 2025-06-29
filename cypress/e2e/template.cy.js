@@ -1,2 +1,0 @@
-describe('Placeholder test suite', () => {
-})
