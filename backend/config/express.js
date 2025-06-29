@@ -21,6 +21,7 @@ const corsOptions = {
         "http://localhost:5173",
         "http://127.0.0.1:5173:3030",
         "http://127.0.0.1:5173",
+        "https://awesome-sde-2-glti.vercel.app"
     ],
     credentials: true, //access-control-allow-credentials:true
     optionSuccessStatus: 200,
