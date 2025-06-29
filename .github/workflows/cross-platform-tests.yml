@@ -36,9 +36,12 @@ jobs:
           path: dist
 
   backend-unit-test:
-    name: Run Backend Unit Tests
-    runs-on: ubuntu-latest
+    name: Run Back end tests on ${{ matrix.os}}
     needs: install
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     defaults:
       run:
         working-directory: backend
@@ -48,9 +51,12 @@ jobs:
       - run: npm test
 
   frontend-unit-tests:
-    name: Run Frontend Unit Tests
-    runs-on: ubuntu-latest
+    name: Run Front end tests on ${{ matrix.os}}
     needs: install
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
