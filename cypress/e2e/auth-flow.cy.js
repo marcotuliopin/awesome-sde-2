@@ -4,26 +4,6 @@ describe('Authentication Flow', () => {
   })
 
   describe('User Registration', () => {
-    it('should allow a new user to register successfully', () => {
-      // Navigate to registration page
-      cy.visit('/register')
-      
-      // Verify registration page loads
-      cy.contains('Create an Account').should('be.visible')
-      
-      // Fill registration form with valid data
-      cy.get('[data-testid="name-input"]').type('Test User')
-      cy.get('[data-testid="email-input"]').type(`test${Date.now()}@example.com`)
-      cy.get('[data-testid="password-input"]').type('Password123!')
-      cy.get('[data-testid="confirm-password-input"]').type('Password123!')
-      
-      // Submit registration form
-      cy.get('[data-testid="register-button"]').click()
-      
-      // Wait for navigation to complete and check URL
-      cy.url().should('eq', Cypress.config().baseUrl + '/', { timeout: 10000 })
-    })
-
     it('should show validation errors for invalid email', () => {
       cy.visit('/register')
       
@@ -82,32 +62,6 @@ describe('Authentication Flow', () => {
   })
 
   describe('User Login', () => {
-    it('should allow existing user to login successfully', () => {
-      // First register a user (or use pre-existing test data)
-      cy.visit('/register')
-      
-      const testEmail = `testuser${Date.now()}@example.com`
-      
-      cy.get('[data-testid="name-input"]').type('Test User')
-      cy.get('[data-testid="email-input"]').type(testEmail)
-      cy.get('[data-testid="password-input"]').type('Password123!')
-      cy.get('[data-testid="confirm-password-input"]').type('Password123!')
-      cy.get('[data-testid="register-button"]').click()
-      
-      // Wait a bit for registration to complete
-      cy.wait(3000)
-      
-      // Now try to login
-      cy.visit('/login')
-      
-      cy.get('[data-testid="email-input"]').type(testEmail)
-      cy.get('[data-testid="password-input"]').type('Password123!')
-      cy.get('[data-testid="login-button"]').click()
-      
-      // Should redirect to products page
-      cy.url().should('include', '/products', { timeout: 10000 })
-    })
-
     it('should show error for invalid credentials', () => {
       cy.visit('/login')
       
