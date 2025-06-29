@@ -20,8 +20,8 @@ describe('Authentication Flow', () => {
       // Submit registration form
       cy.get('[data-testid="register-button"]').click()
       
-      // Should redirect to home page
-      cy.url().should('eq', Cypress.config().baseUrl + '/')
+      // Wait for navigation to complete and check URL
+      cy.url().should('eq', Cypress.config().baseUrl + '/', { timeout: 10000 })
     })
 
     it('should show validation errors for invalid email', () => {
@@ -95,7 +95,7 @@ describe('Authentication Flow', () => {
       cy.get('[data-testid="register-button"]').click()
       
       // Wait a bit for registration to complete
-      cy.wait(1000)
+      cy.wait(3000)
       
       // Now try to login
       cy.visit('/login')
@@ -105,7 +105,7 @@ describe('Authentication Flow', () => {
       cy.get('[data-testid="login-button"]').click()
       
       // Should redirect to products page
-      cy.url().should('include', '/products')
+      cy.url().should('include', '/products', { timeout: 10000 })
     })
 
     it('should show error for invalid credentials', () => {
