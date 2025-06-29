@@ -8,6 +8,7 @@ import { Register } from "@/routes/register/Register";
 import "./index.css";
 import { AuthWrapper } from "./components/layout/AuthWrapper";
 import { ThemeProvider } from "./contexts/theme.context";
+import ProductsPage from "./routes/Products/ProductsPage";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
             },
             { path: "/login", element: <Login /> },
             { path: "/register", element: <Register /> },
+            {path: "/products", element: <ProductsPage />}
         ],
     },
 ]);

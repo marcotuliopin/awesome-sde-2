@@ -6,8 +6,15 @@
     "password": "$2b$10$SZmAm0gjiphydHfh8JMuZugCdIS.sQkNacUlt76CpAGv0PKmga27m"
   },
   {
-    "id": 1749048662031,
+    "id": 1749049934248,
+    "name": "gabriel",
     "email": "gabriel@adsa.com.br",
-    "password": "$2b$10$S2x9k7OUCN40WJf.N4JWVepT5dbAMuqGT6jnaJCu12vozlVfSywTa"
+    "password": "$2b$10$rVyawpKOXIRYAuEuG7WwN.7JeOv2YcZhbeZDCdPHYairzuFLntRq2"
+  },
+  {
+    "id": 1751208085083,
+    "name": "Nome Foda",
+    "email": "ehumemail@gmail.com",
+    "password": "$2b$10$PTAT8O0ylUUpy7HYIh6xoOdwvXdsPLrP328cN5e8LXOJVepWaBbmq"
   }
 ]

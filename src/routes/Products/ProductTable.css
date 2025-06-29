@@ -1,0 +1,95 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho da tabela */
+thead {
+  background-color: #007bff;
+  color: white;
+}
+
+thead th {
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 16px;
+}
+
+/* Corpo da tabela */
+tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody td {
+  padding: 12px 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Entrada de quantidade */
+tbody td input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Botão de atualizar */
+tbody td button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+tbody td button:hover {
+  background-color: #218838;
+}
+
+tbody td button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Mensagem de carregamento */
+tbody td div {
+  font-size: 14px;
+  color: #555;
+  font-style: italic;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  table {
+    font-size: 12px;
+  }
+
+  thead th,
+  tbody td {
+    padding: 10px;
+  }
+
+  tbody td input[type="number"] {
+    width: 50px;
+  }
+
+  tbody td button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
