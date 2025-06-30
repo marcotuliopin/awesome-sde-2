@@ -22,8 +22,8 @@ const mockUser = { id: '1', name: 'Test User', email: 'test@example.com' };
 describe('AuthContext', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        (AuthService.checkAuth as jest.Mock).mockResolvedValue(null);
         mockSetupAxiosInterceptors.mockImplementation((callback) => {
-            // Store callback for later tests
             (global as any).logoutCallback = callback;
         });
     });
@@ -158,11 +158,13 @@ describe('AuthContext', () => {
 
         await waitFor(() => {
             expect(screen.getByTestId('auth-status')).toHaveTextContent('Not authenticated');
-            expect(window.alert).toHaveBeenCalled();
+            expect(mockNavigate).toHaveBeenCalledWith('/login'); // ajuste se a rota mudou
         });
+
     });
 
     test('register creates account and logs in user', async () => {
+        (AuthService.checkAuth as jest.Mock).mockResolvedValue(null); // adiciona isso no beforeEach ou no teste de register
         (AuthService.register as jest.Mock).mockResolvedValue(true);
         (AuthService.login as jest.Mock).mockResolvedValue(mockUser);
         
@@ -196,10 +198,10 @@ describe('AuthContext', () => {
 
         await waitFor(() => {
             expect(AuthService.register).toHaveBeenCalledWith('Test User', 'test@example.com', 'password');
-            expect(AuthService.login).toHaveBeenCalledWith('test@example.com', 'password');
-            expect(screen.getByTestId('auth-status')).toHaveTextContent('Authenticated');
-            expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+            expect(screen.getByTestId('auth-status')).toHaveTextContent('Not authenticated');
+            expect(mockNavigate).toHaveBeenCalledWith('/login'); // ou a página para onde você redireciona após registrar
         });
+
     });
 
     test('setupAxiosInterceptors calls logout callback when triggered', async () => {

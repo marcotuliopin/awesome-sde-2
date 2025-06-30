@@ -92,8 +92,7 @@ const logout = async () => {
     const register = async (
     name: string,
     email: string,
-    password: string,
-    from: string
+    password: string
     ): Promise<boolean> => {
     try {
         const success = await AuthService.register(name, email, password);
