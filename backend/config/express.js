@@ -18,14 +18,15 @@ const corsOptions = {
     origin: [
         "http://localhost:3000",
         "http://localhost:3030",
+        "http://127.0.0.1:3030",
         "http://localhost:5173",
-        "http://127.0.0.1:5173:3030",
         "http://127.0.0.1:5173",
         "https://awesome-sde-2-glti.vercel.app"
     ],
-    credentials: true, //access-control-allow-credentials:true
+    credentials: true,
     optionSuccessStatus: 200,
 };
+
 app.use(cors(corsOptions));
 
 const UserRouter = require("../src/domains/user/controllers/index");
