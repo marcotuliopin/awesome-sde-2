@@ -27,40 +27,38 @@ function jwtSign(user, res) {
 async function jwtMiddleware(req, res, next) {
     try {
         const token = cookieExtractor(req);
-        if (token) {
-            const decoded = jwt.verify(token, authConfig.JWT_SECRET);
-            req.user = decoded.user;
-        }
+        if (!token) throw new PermissionError("Token ausente");
 
-        if (!req.user) {
-            throw new PermissionError(
-                "You must be logged in to access this resource."
-            );
-        }
+        const decoded = jwt.verify(token, authConfig.JWT_SECRET);
+        if (!decoded.user?.email) throw new PermissionError("Token inválido");
+
+        req.user = decoded.user;
         next();
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        console.error("jwtMiddleware:", err);
+        next(err);
     }
 }
+
+
 
 const notLoggedIn = (req, res, next) => {
     try {
         const token = cookieExtractor(req);
         if (token) {
-            jwt.verify(token, process.env.JWT_SECRET, (error) => {
-                if (!(error instanceof jwt.TokenExpiredError)) {
-                    let data = jwt.decode(token);
-                    throw new PermissionError(
-                        "You are already logged in as: " + data.user.email
-                    );
-                }
-            });
+            const decoded = jwt.verify(token, authConfig.JWT_SECRET);
+            if (decoded) {
+                throw new PermissionError(
+                    "You are already logged in as: " + decoded.user.email
+                );
+            }
         }
         next();
     } catch (error) {
         next(error);
     }
 };
+
 
 function cookieExtractor(req) {
     let token = null;
@@ -88,7 +86,7 @@ async function loginMiddleware(req, res, next) {
                 throw new PermissionError("Invalid email or password");
             }
         }
-
+        res.clearCookie("jwt");
         jwtSign(user, res);
 
         const userInfo = {

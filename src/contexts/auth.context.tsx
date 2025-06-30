@@ -76,33 +76,39 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    const logout = async () => {
-        try {
-            await AuthService.logout();
-        } catch (error) {
-            console.error("Logout failed:", error);
-        } finally {
-            setUser(null);
-            setIsAuthenticated(false);
-            alert("You have been logged out.");
-        }
-    };
+const logout = async () => {
+    try {
+        await AuthService.logout();
+    } catch (error) {
+        console.error("Logout failed:", error);
+    } finally {
+        setUser(null);
+        setIsAuthenticated(false);
+        navigate("/login"); // ← redireciona após logout
+    }
+};
+
 
     const register = async (
-        name: string,
-        email: string,
-        password: string,
-        from: string
+    name: string,
+    email: string,
+    password: string,
+    from: string
     ): Promise<boolean> => {
-        try {
-            const success = await AuthService.register(name, email, password);
-            if (success) return await login(email, password, from);
-            return false;
-        } catch (error) {
-            console.error("Registration failed:", error);
-            return false;
+    try {
+        const success = await AuthService.register(name, email, password);
+        if (success) {
+        navigate("/login"); // redireciona manualmente
         }
+        return success;
+    } catch (error) {
+        console.error("Registration failed:", error);
+        return false;
+    }
     };
+
+
+
 
     return (
         <AuthContext.Provider

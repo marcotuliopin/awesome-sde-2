@@ -18,7 +18,7 @@ Router.post("/", async (req, res, next) => {
 
 Router.post("/login", notLoggedIn, loginMiddleware);
 
-Router.post("/logout", jwtMiddleware, async (req, res, next) => {
+Router.post("/logout", async (req, res, next) => {
     try {
         res.clearCookie("jwt");
         res.status(httpStatusCodes.NO_CONTENT).send("Logout successful");
@@ -26,6 +26,7 @@ Router.post("/logout", jwtMiddleware, async (req, res, next) => {
         next(error);
     }
 });
+
 
 Router.get("/me", jwtMiddleware, async (req, res, next) => {
     try {
