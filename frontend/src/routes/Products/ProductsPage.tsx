@@ -127,13 +127,13 @@ class Products extends React.Component<object, ProductsState> {
         {this.state.loading && <p>Loading...</p>}
         <div id="flex-container">
           <div className="search-product">
-            <h3>Procurar produtos</h3>
+            <h3>Search products</h3>
             <div className="search-product-form">
               <div className="search-form-group">
                 <input
                   name="search-by-name"
                   id="search-by-name"
-                  placeholder="Insira o nome do produto"
+                  placeholder="Type product name"
                   value={this.state.searchQuery}
                   onChange={this.handleQuery}
                 />
@@ -142,7 +142,7 @@ class Products extends React.Component<object, ProductsState> {
           </div>
           <main className="table">
             <div className="table-header">
-              <h3>Produtos</h3>
+              <h3>Products</h3>
             </div>
             <div>
               <ProductTable
@@ -152,7 +152,7 @@ class Products extends React.Component<object, ProductsState> {
             </div>
           </main>
           <div className="add-product">
-            <h3>Adicionar produtos</h3>
+            <h3>Add products</h3>
             <form onSubmit={this.handleSubmit} className="add-form">
               <div className="product-description">
                 <div className="add-product-form">
@@ -179,7 +179,7 @@ class Products extends React.Component<object, ProductsState> {
                   </div>
                   <div className="add-form-group">
                     <label htmlFor="product-expiration-date-input">
-                      Validade
+                      Expiration Date
                     </label>
                     <input
                       type="date"
@@ -190,7 +190,7 @@ class Products extends React.Component<object, ProductsState> {
                     />
                   </div>
                   <div className="add-form-group">
-                    <label htmlFor="product-quantity-input">Quantidade</label>
+                    <label htmlFor="product-quantity-input">Quantity</label>
                     <input
                       type="number"
                       id="productQuantity"
@@ -203,7 +203,7 @@ class Products extends React.Component<object, ProductsState> {
                 </div>
                 <div className="add-product-button-wrapper">
                   <button type="submit" disabled={this.state.loading}>
-                    {this.state.loading ? "Carregando..." : "Adicionar"}
+                    {this.state.loading ? "Loading..." : "Add"}
                   </button>
                 </div>
               </div>

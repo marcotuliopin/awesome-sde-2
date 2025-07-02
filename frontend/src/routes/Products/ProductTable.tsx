@@ -40,10 +40,10 @@ const ProductTable: FC<ProductTableProps> = ({ products, onQuantityUpdate }) => 
     <table>
       <thead>
         <tr>
-          <th>Nome</th>
-          <th>Marca</th>
-          <th>Validade</th>
-          <th>Quantidade</th>
+          <th>Name</th>
+          <th>Brand</th>
+          <th>Exp. Date</th>
+          <th>Quantity</th>
           <th></th>
         </tr>
       </thead>
@@ -62,7 +62,7 @@ const ProductTable: FC<ProductTableProps> = ({ products, onQuantityUpdate }) => 
               />
             </td>
             <td> {isLoading ? (
-                <div>Carregando...</div>
+                <div>Loading...</div>
               ) : (
                 <button onClick={() => handleQuantityUpdateButton(product.id, product.quantity)}>Atualizar</button>
               )}
