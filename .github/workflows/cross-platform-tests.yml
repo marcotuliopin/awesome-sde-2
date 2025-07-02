@@ -12,34 +12,64 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Cache node_modules
-      - name: Cache node modules
+      - name: Cache frontend node_modules
         uses: actions/cache@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          path: frontend/node_modules
+          key: ${{ runner.os }}-frontend-${{ hashFiles('frontend/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-frontend-
 
-      # Install Cypress dependencies and build
-      - name: Cypress install + build
+      - name: Cache backend node_modules
+        uses: actions/cache@v3
+        with:
+          path: backend/node_modules
+          key: ${{ runner.os }}-backend-${{ hashFiles('backend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-backend-
+
+      - name: Install frontend dependencies
+        run: |
+          echo "::group::Installing frontend deps"
+          npm ci
+          echo "::endgroup::"
+        working-directory: frontend
+
+      - name: Install backend dependencies
+        run: |
+          echo "::group::Installing backend deps"
+          npm ci
+          echo "::endgroup::"
+        working-directory: backend
+
+      - name: Audit frontend dependencies
+        run: npm audit --audit-level=critical
+        working-directory: frontend
+
+      - name: Audit backend dependencies
+        run: npm audit --audit-level=critical
+        working-directory: backend
+
+      - name: Cypress install + build (no tests)
         uses: cypress-io/github-action@v6
         with:
+          working-directory: frontend
           runTests: false
           build: npm run build
 
-      - name: Save build
+      - name: Save frontend build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build
           if-no-files-found: error
-          path: dist
+          path: frontend/dist
 
   backend-unit-test:
-    name: Run Back end tests on ${{ matrix.os}}
+    name: Run backend tests on ${{ matrix.os }}
     needs: install
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     defaults:
@@ -47,47 +77,56 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
+
+      - name: Cache backend node_modules
+        uses: actions/cache@v3
+        with:
+          path: backend/node_modules
+          key: ${{ runner.os }}-backend-${{ hashFiles('backend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-backend-
+
       - run: npm ci
-      - run: npm test
+      - run: npm run lint
+      - run: npm test -- --ci
 
   frontend-unit-tests:
-    name: Run Front end tests on ${{ matrix.os}}
+    name: Run frontend tests on ${{ matrix.os }}
     needs: install
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     defaults:
       run:
         working-directory: frontend
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Cache node modules
+      - name: Cache frontend node_modules
         uses: actions/cache@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          path: frontend/node_modules
+          key: ${{ runner.os }}-frontend-${{ hashFiles('frontend/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-frontend-
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run Unit Tests
-        run: npm test
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test -- --ci
 
   e2e-tests:
     name: Run Cypress tests on ${{ matrix.os }}
     needs: install
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
@@ -99,27 +138,27 @@ jobs:
         with:
           node-version: 20
 
-      - name: Cache node modules
+      - name: Cache frontend node_modules
         uses: actions/cache@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          path: frontend/node_modules
+          key: ${{ runner.os }}-frontend-${{ hashFiles('frontend/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-frontend-
 
       - name: Install frontend dependencies
         run: npm ci
+        working-directory: frontend
 
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: build
-          path: dist
+          path: frontend/dist
 
       - name: Install backend dependencies
-        run: |
-          cd backend
-          npm ci
+        run: npm ci
+        working-directory: backend
 
       - name: Start backend server
         run: |
@@ -129,14 +168,14 @@ jobs:
             cd backend && npm start &
           fi
         shell: bash
-      
+
       - name: Wait for backend to be ready
         run: npx wait-on http://localhost:3000
-      
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
+          working-directory: frontend
           start: npm run preview
           browser: chrome
           wait-on: 'http://localhost:3030'
-          wait-on-timeout: 120
