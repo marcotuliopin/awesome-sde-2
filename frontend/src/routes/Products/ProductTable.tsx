@@ -64,7 +64,7 @@ const ProductTable: FC<ProductTableProps> = ({ products, onQuantityUpdate }) => 
             <td> {isLoading ? (
                 <div>Loading...</div>
               ) : (
-                <button onClick={() => handleQuantityUpdateButton(product.id, product.quantity)}>Atualizar</button>
+                <button onClick={() => handleQuantityUpdateButton(product.id, product.quantity)}>Update</button>
               )}
             </td>
           </tr>

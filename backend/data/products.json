@@ -5,5 +5,33 @@
     "brand": "asd",
     "quantity": 4,
     "expirationDate": "2025-07-22"
+  },
+  {
+    "id": 1751498246845,
+    "name": "produto",
+    "brand": "marca",
+    "quantity": 10,
+    "expirationDate": "2025-07-22"
+  },
+  {
+    "id": 1751498277653,
+    "name": "11",
+    "brand": "11",
+    "quantity": 2,
+    "expirationDate": "2025-07-21"
+  },
+  {
+    "id": 1751498572543,
+    "name": "produto1",
+    "brand": "marca2",
+    "quantity": 29,
+    "expirationDate": "2025-07-22"
+  },
+  {
+    "id": 1751498985740,
+    "name": "novo produto",
+    "brand": "marca boa",
+    "quantity": 6,
+    "expirationDate": "2025-07-22"
   }
 ]
