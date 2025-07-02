@@ -168,7 +168,7 @@ class Products extends React.Component<object, ProductsState> {
                     />
                   </div>
                   <div className="add-form-group">
-                    <label htmlFor="product-brand-input">Marca</label>
+                    <label htmlFor="product-brand-input">Brand</label>
                     <input
                       type="text"
                       id="productBrand"
