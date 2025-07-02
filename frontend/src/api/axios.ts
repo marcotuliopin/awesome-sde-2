@@ -1,8 +1,8 @@
+import { API_URL } from '../config';
 import axios, {
     type AxiosResponse,
 } from "axios";
-
-const BASE_URL: string = import.meta.env.VITE_API_URL;
+const BASE_URL: string = API_URL;
 export const publicApi = axios.create({
     baseURL: BASE_URL,
     headers: {
