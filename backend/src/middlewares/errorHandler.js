@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { JsonWebTokenError } = require('jsonwebtoken');
 const NotAuthorizedError = require('../../errors/NotAuthorizedError.js');
 const InvalidParamError = require('../../errors/InvalidParamError');
@@ -5,7 +6,8 @@ const QueryError = require('../../errors/QueryError');
 const httpStatusCodes = require('../utils/constants/httpStatusCodes');
 const { UniqueConstraintError } = require('sequelize');
 
-function errorHandler(error, req, res) {
+
+function errorHandler(error, req, res, next) {
     let message = error.message || "Internal server error";
     let status = httpStatusCodes.INTERNAL_SERVER_ERROR;
 
