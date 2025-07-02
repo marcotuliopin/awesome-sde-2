@@ -22,7 +22,7 @@ const corsOptions = {
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "https://awesome-sde-2-glti.vercel.app",
-        "https://awesome-sde-2.vercel.app/"
+        "https://awesome-sde-2.vercel.app"
     ],
     credentials: true,
     optionSuccessStatus: 200,
