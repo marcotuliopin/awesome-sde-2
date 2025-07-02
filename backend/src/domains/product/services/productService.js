@@ -2,14 +2,17 @@ const fs = require("fs").promises;
 const path = require("path");
 const QueryError = require("../../../../errors/QueryError");
 
-const PRODUCTS_FILE = process.env.PRODUCTS_FILE || path.resolve(__dirname, "../../../../data/products.json");
+const PRODUCTS_FILE =
+  process.env.PRODUCTS_FILE ||
+  path.resolve(__dirname, "../../../../data/products.json");
 
 class ProductService {
   async _readProducts() {
     try {
       const data = await fs.readFile(PRODUCTS_FILE, "utf-8");
       return JSON.parse(data);
-    } catch (error) {
+    } catch (err) {
+      console.log(err);
       return [];
     }
   }

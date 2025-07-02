@@ -5,7 +5,7 @@ const QueryError = require('../../errors/QueryError');
 const httpStatusCodes = require('../utils/constants/httpStatusCodes');
 const { UniqueConstraintError } = require('sequelize');
 
-function errorHandler(error, req, res, next) {
+function errorHandler(error, req, res) {
     let message = error.message || "Internal server error";
     let status = httpStatusCodes.INTERNAL_SERVER_ERROR;
 

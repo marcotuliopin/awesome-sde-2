@@ -39,7 +39,7 @@ export const Register = (): JSX.Element => {
     const hasMinLength = password.length >= 6;
     const hasNumber = /\d/.test(password);
     const hasLetter = /[a-zA-Z]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
 
     if (!hasMinLength || !hasNumber || !hasLetter || !hasSpecialChar) {
       setError(

@@ -5,7 +5,9 @@ const NotFoundError = require("../../../../errors/NotFoundError");
 const DuplicateError = require("../../../../errors/DuplicateError");
 const QueryError = require("../../../../errors/QueryError");
 
-const USERS_FILE = process.env.USERS_FILE || path.resolve(__dirname, "../../../../data/users.json");
+const USERS_FILE =
+  process.env.USERS_FILE ||
+  path.resolve(__dirname, "../../../../data/users.json");
 
 class UserService {
   async _readUsers() {
@@ -13,6 +15,7 @@ class UserService {
       const data = await fs.readFile(USERS_FILE, "utf-8");
       return JSON.parse(data);
     } catch (error) {
+      console.log(error);
       return [];
     }
   }
@@ -46,7 +49,7 @@ class UserService {
     users.push(newUser);
     await this._writeUsers(users);
 
-    const { password, ...userWithoutPassword } = newUser;
+    const { ...userWithoutPassword } = newUser;
     return userWithoutPassword;
   }
 

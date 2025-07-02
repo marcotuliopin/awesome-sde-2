@@ -24,6 +24,7 @@ describe('AuthContext', () => {
         jest.clearAllMocks();
         (AuthService.checkAuth as jest.Mock).mockResolvedValue(null);
         mockSetupAxiosInterceptors.mockImplementation((callback) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (global as any).logoutCallback = callback;
         });
     });
@@ -221,6 +222,7 @@ describe('AuthContext', () => {
 
         // Simulate token expiry or unauthorized response by calling the interceptor callback
         act(() => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (global as any).logoutCallback();
         });
 

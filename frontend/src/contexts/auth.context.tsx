@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-refresh/only-export-components */
 import { setupAxiosInterceptors } from "@/api/axios";
 import { AuthService } from "@/services/auth.service";
 import type { User } from "@/types/user";

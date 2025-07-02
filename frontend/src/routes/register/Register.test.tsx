@@ -69,6 +69,7 @@ describe("<Register />", () => {
 
     it("calls register on valid form submission", async () => {
         const mockRegister = jest.fn(async () => true);
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         jest.spyOn(require("@/contexts/auth.context"), "useAuth").mockReturnValue({ register: mockRegister });
 
         renderWithRouter(<Register />);
@@ -85,6 +86,7 @@ describe("<Register />", () => {
 
     it("shows alert if register fails", async () => {
         const mockRegister = jest.fn(async () => false);
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         jest.spyOn(require("@/contexts/auth.context"), "useAuth").mockReturnValue({ register: mockRegister });
         window.alert = jest.fn();
 

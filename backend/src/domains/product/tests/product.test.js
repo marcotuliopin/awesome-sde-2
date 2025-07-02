@@ -1,7 +1,6 @@
 process.env.PRODUCTS_FILE = require("path").resolve(__dirname, "../../../../data/products.test.json");
 
 const fs = require("fs").promises;
-const path = require("path");
 const productService = require("../services/productService");
 
 describe("ProductService", () => {

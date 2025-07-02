@@ -9,6 +9,7 @@ export const AuthService = {
                 password,
             }); //Server returns a JWT as an HTTP-only cookie
             return response.data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             // TODO: add type for error
             if (error.response?.data) {
@@ -21,6 +22,7 @@ export const AuthService = {
     logout: async (): Promise<void> => {
         try {
             await privateApi.post("/user/logout");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             if (error.response?.data) {
                 throw new Error(error.response.data.message);
@@ -41,6 +43,7 @@ export const AuthService = {
                 password,
             });
             return response.status === 202;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             if (error.response?.data) {
                 throw new Error(error.response.data.message);
@@ -54,6 +57,7 @@ export const AuthService = {
             const response = await privateApi.get("/user/me");
             return response.data as User;
         } catch (error) {
+            console.log(error);
             return null;
         }
     },

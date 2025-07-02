@@ -3,7 +3,9 @@ import { ThemeToggle } from "./ThemeToggle";
 import { ThemeContext, type Theme } from "@/contexts/theme.context";
 
 jest.mock("react-icons/fa", () => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FaMoon: (props: any) => <svg data-testid="moon" {...props} />,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FaSun: (props: any) => <svg data-testid="sun" {...props} />,
 }));
 

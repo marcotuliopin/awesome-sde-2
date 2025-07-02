@@ -48,6 +48,7 @@ describe("<Login />", () => {
         const mockLogin = jest.fn().mockResolvedValue(true);
         // Override the mock for this test
         jest.spyOn(
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             require("@/contexts/auth.context"),
             "useAuth"
         ).mockReturnValue({ login: mockLogin });
@@ -79,6 +80,7 @@ describe("<Login />", () => {
     it("shows alert if login fails", async () => {
         const mockLogin = jest.fn().mockResolvedValue(false);
         jest.spyOn(
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             require("@/contexts/auth.context"),
             "useAuth"
         ).mockReturnValue({ login: mockLogin });

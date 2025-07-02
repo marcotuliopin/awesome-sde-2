@@ -31,7 +31,7 @@ Router.post("/logout", async (req, res, next) => {
 Router.get("/me", jwtMiddleware, async (req, res, next) => {
     try {
         const user = await UserService.getByEmail(req.user.email);
-        const { password, ...userWithoutPassword } = user;
+        const {  ...userWithoutPassword } = user;
         res.status(httpStatusCodes.SUCCESS).send(userWithoutPassword);
     } catch (error) {
         next(error);

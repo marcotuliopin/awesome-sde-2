@@ -1,7 +1,6 @@
 process.env.USERS_FILE = require("path").resolve(__dirname, "../../../../data/users.test.json");
 
 const fs = require("fs").promises;
-const path = require("path");
 const userService = require("../services/userService");
 
 
