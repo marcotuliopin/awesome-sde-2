@@ -33,5 +33,12 @@
     "brand": "asd",
     "quantity": 12,
     "expirationDate": "2025-06-27"
+  },
+  {
+    "id": 1751486032197,
+    "name": "13",
+    "brand": "asd",
+    "quantity": 12,
+    "expirationDate": "2025-06-27"
   }
 ]
