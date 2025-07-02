@@ -57,6 +57,9 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -78,7 +81,7 @@ jobs:
         run: npm ci
 
       - name: Run Unit Tests
-        run: npm test -- --testPathIgnorePatterns=backend
+        run: npm test
 
   e2e-tests:
     name: Run Cypress tests on ${{ matrix.os }}
